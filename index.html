@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quà Sinh Nhật</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stage" id="stage">
+    <canvas class="confetti" id="confetti"></canvas>
+
+    <header>
+      <img id="topImage" src="cake.jpg" alt="Bánh sinh nhật" />
+      <div>
+        <div class="title">🎉 Chúc mừng sinh nhật! 🎂</div>
+        <div class="subtitle">Dành tặng bạn nhíee</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left">
+        <div class="card">
+          <div class="message" id="message">
+            Chúc b Kly tuổi mới tràn đầy vui vẻ, thành công và thật nhiều kỉ niệm đẹp. 
+            Hy vọng món quà nhỏ này làm bạn cười :)
+          </div>
+
+          <div class="cta">
+            <button class="btn" id="toggleMusicBtn"> Nhạc</button>
+            <button class="btn" id="giftBtn" style="background:#5b8cff">🎁 Mở quà</button>
+            <button class="btn" id="shareBtn" style="background:#16a34a">📤 Chia sẻ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="giftBox" id="giftBox">
+        <!-- Ảnh quà sẽ hiện khi nhấn nút -->
+        <img src="qua.jpg" alt="Quà" id="giftImage" />
+      </div>
+    </div>
+
+    <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

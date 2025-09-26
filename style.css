@@ -1,0 +1,102 @@
+:root {
+  --bg:#0b1020;
+  --card:#0f1724;
+  --accent:#ff6b6b;
+}
+
+html,body {
+  height:100%;
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+}
+
+body {
+  background:linear-gradient(180deg,#07102a 0%,#08121d 60%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+
+.stage {
+  width:100%;
+  max-width:920px;
+  padding:28px;
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+  position:relative;
+  overflow:hidden;
+}
+
+header {
+  display:flex;
+  gap:18px;
+  align-items:center;
+}
+
+#topImage {
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 6px 24px rgba(0,0,0,0.5);
+  border:4px solid rgba(255,255,255,0.06);
+  animation:floaty 3.2s ease-in-out infinite;
+}
+
+.title {font-size:20px;font-weight:700}
+.subtitle {opacity:0.85;font-size:14px}
+
+.content {margin-top:22px;display:flex;gap:20px}
+.left {flex:1}
+.card {
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+  padding:18px;
+  border-radius:14px
+}
+.message {font-size:18px;line-height:1.4}
+
+.cta {margin-top:14px;display:flex;gap:10px;align-items:center}
+.btn {
+  background:var(--accent);
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+canvas.confetti {
+  position:absolute;
+  left:0;top:0;
+  width:100%;height:100%;
+  pointer-events:none;
+}
+
+@keyframes floaty {
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+  100%{transform:translateY(0)}
+}
+
+/* gift hidden by default */
+.giftBox {
+  width:260px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#giftImage {
+  max-width:200px;
+  border-radius:12px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  display:none; /* ẩn mặc định */
+}
+
+@media(max-width:640px){
+  .content{flex-direction:column}
+  .title{font-size:18px}
+  .message{font-size:16px}
+}
