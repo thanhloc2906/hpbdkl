@@ -39,7 +39,7 @@
 
     <header>
       <!-- Thay cake.png bằng ảnh bánh sinh nhật của bạn -->
-      <img id="topImage" src="cake.png" alt="Bánh sinh nhật" />
+      <img id="topImage" src="cake.jpgjpg" alt="Bánh sinh nhật" />
       <div>
         <div class="title">Chúc mừng sinh nhật!</div>
         <div class="subtitle">Dành tặng bạn nhíee</div>
@@ -60,7 +60,7 @@
 
       <div style="width:260px;display:flex;align-items:center;justify-content:center">
         <!-- Bạn có thể đổi ảnh cỡ lớn ở đây -->
-        <img src="qua.png" alt="Quà" style="max-width:200px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5)" />
+        <img src="qua.jpgjpg" alt="Quà" style="max-width:200px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5)" />
       </div>
     </div>
 
@@ -97,14 +97,14 @@
     const playBtn = document.getElementById('playBtn');
     playBtn.addEventListener('click',async ()=>{
       try{await bgm.play(); playBtn.textContent='Đang phát nhạc';}
-      catch(e){console.log('Không thể phát tự động',e);}
+      catch(e){console.log('Không thể phát tự động:((',e);}
     });
 
     // Share: copy link (nếu bạn deploy lên web). Nếu chỉ dùng file local, copy nội dung tin nhắn.
     const shareBtn = document.getElementById('shareBtn');
     shareBtn.addEventListener('click',()=>{
       const url = location.href;
-      navigator.clipboard?.writeText(url).then(()=>alert('Đã sao chép link: '+url),()=>alert('Không thể sao chép link. Bạn có thể gửi file HTML cho bạn bè.'));
+      navigator.clipboard?.writeText(url).then(()=>alert('thanhloc sao chép link cho bạn: '+url),()=>alert('Không thể sao chép link. Bạn có thể gửi linhk cho bạn bè. ưeb làm bởi thanhloccute'));
     });
 
     // Option: nếu bạn muốn đổi hình bánh động qua JS
