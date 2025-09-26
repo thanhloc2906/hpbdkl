@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quà Sinh Nhật</title>
+  <style>
+    :root{--bg:#0b1020;--card:#0f1724;--accent:#ff6b6b}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{background:linear-gradient(180deg,#07102a 0%,#08121d 60%);display:flex;align-items:center;justify-content:center;color:#fff}
+    .stage{width:100%;max-width:920px;padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 10px 40px rgba(0,0,0,0.6);position:relative;overflow:hidden}
+    header{display:flex;gap:18px;align-items:center}
+    #topImage{width:92px;height:92px;border-radius:50%;object-fit:cover;box-shadow:0 6px 24px rgba(0,0,0,0.5);border:4px solid rgba(255,255,255,0.06)}
+    .title{font-size:20px;font-weight:700}
+    .subtitle{opacity:0.85;font-size:14px}
+
+    .content{margin-top:22px;display:flex;gap:20px}
+    .left{flex:1}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:14px}
+    .message{font-size:18px;line-height:1.4}
+
+    .cta{margin-top:14px;display:flex;gap:10px;align-items:center}
+    .btn{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;color:white;font-weight:700;cursor:pointer}
+
+    /* confetti canvas covers whole stage */
+    canvas.confetti{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+
+    /* small animation for top image */
+    @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    #topImage{animation:floaty 3.2s ease-in-out infinite}
+
+    /* responsive */
+    @media(max-width:640px){.content{flex-direction:column}.title{font-size:18px}.message{font-size:16px}}
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <canvas class="confetti" id="confetti"></canvas>
+
+    <header>
+      <!-- Thay cake.png bằng ảnh bánh sinh nhật của bạn -->
+      <img id="topImage" src="cake.png" alt="Bánh sinh nhật" />
+      <div>
+        <div class="title">Chúc mừng sinh nhật!</div>
+        <div class="subtitle">Dành tặng bạn nhíee</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left">
+        <div class="card">
+          <div class="message" id="message">Chúc bạn một tuổi mới tràn đầy vui vẻ, thành công và thật nhiều kỉ niệm đẹp. Hy vọng món quà nhỏ này làm bạn cười :)</div>
+
+          <div class="cta">
+            <button class="btn" id="playBtn">Phát nhạc / Bật niềm vui</button>
+            <button class="btn" id="shareBtn" style="background:#5b8cff">Chia sẻ</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="width:260px;display:flex;align-items:center;justify-content:center">
+        <!-- Bạn có thể đổi ảnh cỡ lớn ở đây -->
+        <img src="qua.png" alt="Quà" style="max-width:200px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.5)" />
+      </div>
+    </div>
+
+    <!-- Nhạc nền: đổi track.mp3 thành file âm nhạc của bạn; để an toàn, trình duyệt di động thường chặn autoplay -->
+    <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
+  </div>
+
+  <script>
+    // Hướng dẫn nhanh: đổi file cake.png thành hình bánh sinh nhật bạn muốn (hoặc dùng URL đầy đủ).
+
+    // Confetti đơn giản
+    (function(){
+      const c = document.getElementById('confetti');
+      const ctx = c.getContext('2d');
+      function resize(){c.width = c.offsetWidth * devicePixelRatio; c.height = c.offsetHeight * devicePixelRatio; ctx.scale(devicePixelRatio, devicePixelRatio)}
+      window.addEventListener('resize', resize); resize();
+
+      const pieces = [];
+      const colors = ['#ff4d6d','#ffd166','#6bf178','#6bb7ff','#c08cff'];
+      function rand(a,b){return a + Math.random()*(b-a)}
+      function spawn(n=40){for(let i=0;i<n;i++){pieces.push({x:rand(0,c.offsetWidth),y:rand(-200,0),w:rand(6,12),h:rand(9,18),vx:rand(-0.5,0.9),vy:rand(1,3),r:rand(0,360),vr:rand(-6,6),color:colors[Math.floor(Math.random()*colors.length)]})}}
+      spawn(90);
+      let last = performance.now();
+      function frame(t){const dt=(t-last)/16; last=t; ctx.clearRect(0,0,c.offsetWidth,c.offsetHeight);
+        for(let i=pieces.length-1;i>=0;i--){const p=pieces[i]; p.x += p.vx*dt; p.y += p.vy*dt; p.r += p.vr*dt; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); if(p.y>c.offsetHeight+50||p.x<-50||p.x>c.offsetWidth+50) pieces.splice(i,1)}
+        if(pieces.length<40) spawn(8);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+
+    // Play button to satisfy mobile autoplay rules
+    const bgm = document.getElementById('bgm');
+    const playBtn = document.getElementById('playBtn');
+    playBtn.addEventListener('click',async ()=>{
+      try{await bgm.play(); playBtn.textContent='Đang phát nhạc';}
+      catch(e){console.log('Không thể phát tự động',e);}
+    });
+
+    // Share: copy link (nếu bạn deploy lên web). Nếu chỉ dùng file local, copy nội dung tin nhắn.
+    const shareBtn = document.getElementById('shareBtn');
+    shareBtn.addEventListener('click',()=>{
+      const url = location.href;
+      navigator.clipboard?.writeText(url).then(()=>alert('Đã sao chép link: '+url),()=>alert('Không thể sao chép link. Bạn có thể gửi file HTML cho bạn bè.'));
+    });
+
+    // Option: nếu bạn muốn đổi hình bánh động qua JS
+    // document.getElementById('topImage').src = 'https://example.com/your-cake.png';
+  </script>
+</body>
+</html>
